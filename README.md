@@ -57,25 +57,19 @@ A execução do script de inicialização pode variar de acordo com o sistema op
 
 O `docker-compose.yml` já contempla as duas opções no serviço `init-hdfs`. Ajuste conforme seu sistema:
 
-# Para Windows:
+* Para Windows:
 
 entrypoint: ["/bin/sh", "-c", "tr -d '\r' < /scripts/load_hdfs.sh | /bin/bash"]
 
-# Para Linux/macOS:
+* Para Linux/macOS:
 
 entrypoint: ["/bin/bash", "-c", "/scripts/load_hdfs.sh"]
-
-````
-
----
 
 ### 4. Subir o Ambiente
 
 Com os dados coletados e os scripts ajustados, execute:
 
-```bash
 docker-compose up -d --build
-````
 
 Esse comando irá:
 
@@ -88,11 +82,10 @@ Esse comando irá:
 ---
 
 ## Estrutura Esperada no HDFS
+>/data/input     ← arquivos CSV carregados
+>
+>/data/output    ← resultado do Job MapReduce
 
-```
-/data/input     ← arquivos CSV carregados
-/data/output    ← resultado do Job MapReduce
-```
 
 ---
 
@@ -102,8 +95,8 @@ Interfaces web para acompanhamento do ambiente Hadoop:
 
 - NameNode UI: [http://localhost:9870](http://localhost:9870)
 - DataNode UI: [http://localhost:9864/](http://localhost:9864/)
-- ResourceManager UI: [http://localhost:8088](http://localhost:8088)
 - HistoryServer UI: [http://localhost:8188](http://localhost:8188)
+- ResourceManager UI: [http://localhost:8088](http://localhost:8088)
 
 Essas URLs podem ser acessadas localmente após a inicialização dos containers.
 
