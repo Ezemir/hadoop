@@ -108,6 +108,14 @@ Se for necessário rodar o job novamente (por exemplo, após uma nova coleta de 
 docker-compose restart init-hdfs
 ```
 
+### Caso falhe a execução do sparkcore.py e sparksql.py:
+
+```bash
+docker exec -it spark-master bash
+spark-submit --master spark://spark-master:7077 /scripts/sparkcore.py
+spark-submit --master spark://spark-master:7077 /scripts/sparksql.py
+```
+
 ---
 
 ### O script é capaz de responder às seguintes perguntas:
