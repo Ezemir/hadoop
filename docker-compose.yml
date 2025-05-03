@@ -77,11 +77,6 @@ services:
       - SPARK_WORKER_CORES=1
     ports:
       - "8081:8081"
-    command: >
-      /bin/bash -c "
-      sleep 30 &&
-      /opt/bitnami/spark/bin/spark-submit --master spark://spark-master:7077 /scripts/sparkcore.py &&
-      /opt/bitnami/spark/bin/spark-submit --master spark://spark-master:7077 /scripts/sparksql.py  "
     volumes:
       - ./scripts:/scripts
       - ./data:/data
