@@ -4,7 +4,7 @@ from pyspark.sql.types import *
 
 # Configuração inicial
 spark = SparkSession.builder \
-    .appName("FuelAnalysisSQL") \
+    .appName("SparkSql") \
     .getOrCreate()
 
 # 1. Carregar e preparar os dados
