@@ -76,7 +76,7 @@ except Exception:
 
 # Filtros
 tipoCombustivel = ["Álcool", "Diesel", "Combustíveis Automotivos"]
-anos_desejados = [str(ano) for ano in range(2024, 2026)]
+anos_desejados = [str(ano) for ano in range(2020, 2026)]
 
 # Processa os títulos
 try:    
