@@ -4,7 +4,7 @@ import statistics
 import math
 
 # Inicializar o Spark
-sc = SparkContext(appName="FuelAnalysis")
+sc = SparkContext(appName="SparkCore")
 spark = SparkSession(sc)
 
 # Carregar os dados do HDFS
