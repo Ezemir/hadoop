@@ -109,6 +109,21 @@ docker-compose restart init-hdfs
 
 ---
 
+### O script é capaz de responder às seguintes perguntas:
+
+- Preço médio do diesel do estado de SP.
+- Média, mediana e desvio padrão dos preços de venda da gasolina, etanol, diesel e diesel S10.
+- Quais são os 3 principais postos de São Paulo que têm a maior média de venda da gasolina, etanol e Diesel
+- Qual o estado que possui a maior média de venda para diesel e diesel S10
+- Quais foram os valores de venda mais alto atrelados a cada bandeira do estado de São Paulo
+- Qual o município apresentou o maior e o menor preço médio do diesel?
+- Informe os 3 bairros de Recife que apresentaram a maior média de preço para diesel e diesel S10, e seus respectivos preços
+
+- As respostas estará em /data
+   - Map Reduce: resultado.txt
+   - SparkCore: sparkcore.txt
+   - SparkSql: sparksql.txt
+
 ## Observações
 
 - O `geckodriver.exe` já está incluído no projeto. Certifique-se de ter o Firefox instalado.
