@@ -28,7 +28,9 @@ Este projeto foi desenvolvido como parte da disciplina **Big Data**, do curso de
 
 Antes de subir o ambiente Hadoop, é necessário coletar os dados da web. Para isso, execute:
 
+
 ```bash
+pip install selenium
 python webscraping.py
 ```
 
@@ -50,12 +52,7 @@ Esse passo é obrigatório para garantir a execução correta dos scripts dentro
 
 ### 3. Atenção ao Sistema Operacional
 
-A execução do script de inicialização pode variar de acordo com o sistema operacional:
-
-- **Windows:** utilize o comando `tr -d '\r'` para remover os caracteres de quebra de linha do Windows.
-- **Linux/macOS:** o script pode ser executado diretamente com `/bin/bash`.
-
-O `docker-compose.yml` já contempla as duas opções no serviço `init-hdfs`. Ajuste conforme seu sistema:
+A execução do script de inicialização será executado no container 'init-hdfs' e pode variar de acordo com o sistema operacional:
 
 * Para Windows:
 
@@ -120,10 +117,4 @@ docker-compose restart init-hdfs
 
 ---
 
-## Licença
-
-Distribuído sob a licença MIT. Livre para usar, estudar e modificar.
-
----
-
-> Projeto desenvolvido com fins didáticos para aplicação prática de conceitos de Big Data, automação e processamento distribuído com Hadoop MapReduce.
+> Projeto desenvolvido com fins didáticos para aplicação prática de conceitos de Big Data, automação e processamento distribuído com Hadoop e Spark.
