@@ -92,8 +92,6 @@ Interfaces web para acompanhamento do ambiente Hadoop:
 
 - NameNode UI: [http://localhost:9870](http://localhost:9870)
 - DataNode UI: [http://localhost:9864/](http://localhost:9864/)
-- HistoryServer UI: [http://localhost:8188](http://localhost:8188)
-- ResourceManager UI: [http://localhost:8088](http://localhost:8088)
 - SparkMaster UI: [http://localhost:8080](http://localhost:8080)
 
 Essas URLs podem ser acessadas localmente após a inicialização dos containers.
