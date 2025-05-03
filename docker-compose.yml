@@ -57,8 +57,8 @@ services:
       - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
       - SPARK_SSL_ENABLED=no
     ports:
-      - "8080:8080" # Spark master web UI
-      - "7077:7077" # Spark master cluster port
+      - "8080:8080"
+      - "7077:7077"
     volumes:
       - ./scripts:/scripts
       - ./data:/data
@@ -76,7 +76,12 @@ services:
       - SPARK_WORKER_MEMORY=1G
       - SPARK_WORKER_CORES=1
     ports:
-      - "8081:8081" # Spark worker web UI
+      - "8081:8081"
+    command: >
+      /bin/bash -c "
+      sleep 30 &&
+      /opt/bitnami/spark/bin/spark-submit --master spark://spark-master:7077 /scripts/sparkcore.py &&
+      /opt/bitnami/spark/bin/spark-submit --master spark://spark-master:7077 /scripts/sparksql.py  "
     volumes:
       - ./scripts:/scripts
       - ./data:/data
