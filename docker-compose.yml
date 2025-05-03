@@ -13,7 +13,6 @@ services:
       - ./data/namenode:/hadoop/dfs/name
       - ./config:/hadoop-config
       - ./scripts:/scripts
-      - ./data/csv:/data/csv
       - ./data:/data
     networks:
       - hadoop
@@ -35,67 +34,56 @@ services:
     depends_on:
       - namenode
 
-  resourcemanager:
-    image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
-    container_name: resourcemanager
-    restart: always
-    ports:
-      - "8088:8088" # UI do ResourceManager
-    environment:
-      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
-      - YARN_RESOURCEMANAGER_HOSTNAME=resourcemanager
-      - YARN_CONF_yarn_log___aggregation___enable=true
-    networks:
-      - hadoop
-    depends_on:
-      - namenode
-
-  nodemanager:
-    image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
-    container_name: nodemanager
-    restart: always
-    environment:
-      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
-      - YARN_RESOURCEMANAGER_HOSTNAME=resourcemanager
-    networks:
-      - hadoop
-    depends_on:
-      - resourcemanager
-
-  historyserver:
-    image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
-    container_name: historyserver
-    restart: always
-    ports:
-      - "8188:8188"
-    environment:
-      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
-      - HDFS_CONF_dfs_replication=1
-      - YARN_RESOURCEMANAGER_HOSTNAME=resourcemanager
-      - SERVICE_PRECONDITION=namenode:9870,resourcemanager:8088
-    networks:
-      - hadoop
-    depends_on:
-      - namenode
-      - datanode
-      - resourcemanager
-      - nodemanager
-    healthcheck:
-      interval: 30s
-      timeout: 10s
-      retries: 5
-
   init-hdfs:
-    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    build:
+      context: .
+      dockerfile: Dockerfile
     depends_on:
       - namenode
     entrypoint: ["/bin/bash", "-c", "/scripts/load_hdfs.sh"]
     volumes:
       - ./scripts:/scripts
-      - ./data/csv:/data/csv
+      - ./data:/data
       - ./config:/hadoop-config
     networks:
       - hadoop
+  spark-master:
+    image: bitnami/spark:3.3.1
+    container_name: spark-master
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    ports:
+      - "8080:8080" # Spark master web UI
+      - "7077:7077" # Spark master cluster port
+    volumes:
+      - ./scripts:/scripts
+      - ./data:/data
+    networks:
+      - hadoop
+    depends_on:
+      - namenode
+
+  spark-worker:
+    image: bitnami/spark:3.3.1
+    container_name: spark-worker
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_WORKER_CORES=1
+    ports:
+      - "8081:8081" # Spark worker web UI
+    volumes:
+      - ./scripts:/scripts
+      - ./data:/data
+    networks:
+      - hadoop
+    depends_on:
+      - spark-master
 
 networks:
   hadoop:
